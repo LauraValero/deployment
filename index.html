@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Técnicas de Deployment con IA</title>
+  <link rel="stylesheet" href="./node_modules/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="./node_modules/reveal.js/dist/theme/black.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ====== PORTADA ====== -->
+      <section>
+        <h1>Técnicas de Deployment con IA</h1>
+        <p class="subtitle">10 técnicas que la industria usa hoy — desplegado en vivo</p>
+        <p class="meta">Universidad del Valle · Desarrollo Aumentado con IA · 2026</p>
+        <p class="meta">Iader · Jefferson · Laura</p>
+      </section>
+
+      <!-- ====== MAPA GENERAL: FASES ====== -->
+      <section>
+        <h2>¿En qué momento actúa la IA?</h2>
+        <div class="fases-horizontal">
+          <div class="fase-card fase-pre">
+            <div class="fase-icon">🏗️</div>
+            <h4>PRE-DEPLOY</h4>
+            <ul>
+              <li>CI/CD con IA</li>
+              <li>GitOps</li>
+              <li>Infra as Code</li>
+            </ul>
+          </div>
+          <div class="fase-arrow">→</div>
+          <div class="fase-card fase-during">
+            <div class="fase-icon">🚦</div>
+            <h4>DEPLOY</h4>
+            <ul>
+              <li>Canary</li>
+              <li>Blue-green</li>
+              <li>Feature flags</li>
+            </ul>
+          </div>
+          <div class="fase-arrow">→</div>
+          <div class="fase-card fase-post">
+            <div class="fase-icon">👁️</div>
+            <h4>POST-DEPLOY</h4>
+            <ul>
+              <li>Observabilidad</li>
+              <li>Self-healing</li>
+              <li>Rollback · Chaos</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment agentes-bar">🤖 AI Agents — orquestan todas las fases <span class="ref">[1][7][8]</span></div>
+      </section>
+
+      <!-- ====== PRE-DEPLOY: TÍTULO ====== -->
+      <section>
+        <h2>🏗️ PRE-DEPLOY</h2>
+        <h3>Preparar y validar antes de publicar</h3>
+        <p class="meta">Técnicas 1, 2 y 3</p>
+      </section>
+
+      <!-- T1: CI/CD con IA -->
+      <section>
+        <h3>1. CI/CD con validación IA</h3>
+        <p class="definicion-corta"><strong>CI</strong> (Continuous Integration) = cada push ejecuta tests<br><strong>CD</strong> (Continuous Deployment) = si pasa, se publica solo</p>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>Pipeline donde una IA revisa tu código, ejecuta tests, y <strong>bloquea el deploy</strong> si detecta bugs o vulnerabilidades. <span class="ref">[1][4]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>GitHub Copilot: 60M+ code reviews <span class="ref">[9]</span></li>
+              <li>CodeRabbit: revisa PRs automáticamente</li>
+              <li>Esta presentación usa GitHub Actions</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment dato-duro">
+          📊 Copilot detecta bugs en el 30% de PRs antes del merge <span class="ref">[9]</span>
+        </div>
+      </section>
+
+      <!-- T2: GitOps -->
+      <section>
+        <h3>2. GitOps</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>El repositorio Git es la <strong>única fuente de verdad</strong>. La IA reconcilia automáticamente el estado del servidor con lo que dice el repo. <span class="ref">[1][3]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>ArgoCD / Flux</li>
+              <li>Vercel: cada push = deploy</li>
+              <li>Si alguien cambia algo a mano → la IA lo revierte</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment analogia">
+          💡 Como tener un contrato escrito: si no está en el repo, no existe
+        </div>
+      </section>
+
+      <!-- T3: Infra as Code con IA -->
+      <section>
+        <h3>3. Infrastructure as Code con IA</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>Describes tu infraestructura en lenguaje natural → la IA genera Terraform, Docker, o configs listas para usar. <span class="ref">[3][6]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>Pulumi AI</li>
+              <li>Claude/Copilot generando Dockerfiles</li>
+              <li>El <code>vercel.json</code> de esta presentación</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment analogia">
+          💡 Pedirle a un arquitecto que dibuje planos describiendo la casa con palabras
+        </div>
+      </section>
+
+      <!-- ====== DEPLOY: TÍTULO ====== -->
+      <section>
+        <h2>🚦 DEPLOY</h2>
+        <h3>Estrategias para entregar con mínimo riesgo</h3>
+        <p class="meta">Técnicas 4, 5 y 6</p>
+      </section>
+
+      <!-- T4: Canary -->
+      <section>
+        <h3>4. Canary Deployments con IA</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>Se despliega al <strong>5-10% del tráfico</strong>. La IA monitorea métricas y si algo va mal, revierte automáticamente. <span class="ref">[1][10]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>Netflix Kayenta <span class="ref">[10]</span></li>
+              <li>Vercel Preview Deployments</li>
+              <li>Google Cloud Deploy</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment">
+          <div class="diagrama-canary">
+            <span class="trafico-viejo">95% → versión actual ✓</span>
+            <span class="trafico-nuevo">5% → versión nueva 🔍</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- T5: Blue-green -->
+      <section>
+        <h3>5. Blue-Green Deployments</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>Dos entornos idénticos. La IA prueba el nuevo (green) a fondo y cuando confirma que funciona, <strong>switchea todo el tráfico</strong>. <span class="ref">[1]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>AWS Elastic Beanstalk</li>
+              <li>Kubernetes con services <span class="ref">[3]</span></li>
+              <li>Rollback instantáneo: volver a blue</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment">
+          <div class="diagrama-bg">
+            <span class="blue">🔵 Blue (actual)</span>
+            <span class="switch">⇄</span>
+            <span class="green">🟢 Green (nuevo)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- T6: Feature flags -->
+      <section>
+        <h3>6. Feature Flags + Progressive Delivery</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>El código nuevo ya está desplegado pero <strong>desactivado</strong>. La IA decide a quién activarle features sin redesplegar. <span class="ref">[11]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>LaunchDarkly / Split.io</li>
+              <li>Netflix, Spotify, Meta <span class="ref">[10]</span></li>
+              <li>Activar feature solo al 1% → medir → escalar</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment analogia">
+          💡 Desplegar sin desplegar: el código está ahí, solo se "prende" cuando la IA dice
+        </div>
+      </section>
+
+      <!-- ====== POST-DEPLOY: TÍTULO ====== -->
+      <section>
+        <h2>👁️ POST-DEPLOY</h2>
+        <h3>Monitorear, detectar y corregir en producción</h3>
+        <p class="meta">Técnicas 7, 8, 9 y 10</p>
+      </section>
+
+      <!-- T7: Observabilidad -->
+      <section>
+        <h3>7. Observabilidad con IA (AIOps)</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>La IA analiza logs, métricas y traces en tiempo real. Detecta anomalías y <strong>distingue errores nuevos</strong> de los que ya existían. <span class="ref">[1][12]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>Datadog AI / New Relic AI</li>
+              <li>Splunk AIOps <span class="ref">[12]</span></li>
+              <li>Reduce 5000 alertas/día → ~100 accionables</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment dato-duro">
+          📊 AIOps reduce el ruido de alertas en un 95% <span class="ref">[12]</span>
+        </div>
+      </section>
+
+      <!-- T8: Self-healing -->
+      <section>
+        <h3>8. Self-Healing Deployments</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>El sistema detecta fallo post-deploy, diagnostica la causa, y <strong>se arregla solo</strong>: rollback, restart, o hotfix automático. <span class="ref">[1][3]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>Kubernetes auto-restart <span class="ref">[3]</span></li>
+              <li>AWS Auto Scaling</li>
+              <li>Un doctor robot 24/7</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment analogia">
+          💡 Nadie se despierta a las 3am — el sistema se cura solo
+        </div>
+      </section>
+
+      <!-- T9: Rollback -->
+      <section>
+        <h3>9. Rollback Automático con IA</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>Motor de decisión que en segundos decide: <strong>¿revertir o intentar arreglar?</strong> basándose en métricas, impacto en usuarios, y severidad. <span class="ref">[1][5]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>Vercel: rollback en 1 click</li>
+              <li>ArgoCD: auto-sync a versión anterior</li>
+              <li>Decisión en segundos, no minutos</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment analogia">
+          💡 Como un capitán de bomberos que decide instantáneamente por dónde atacar el fuego
+        </div>
+      </section>
+
+      <!-- T10: Chaos engineering -->
+      <section>
+        <h3>10. Chaos Engineering con IA</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>La IA <strong>rompe cosas a propósito</strong> en producción para verificar que self-healing, rollback y alertas funcionen de verdad. <span class="ref">[10]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>Netflix Chaos Monkey <span class="ref">[10]</span></li>
+              <li>Gremlin / Litmus</li>
+              <li>"¿Qué pasa si se cae un servidor?"</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment analogia">
+          💡 Simulacro de incendio: verificar que el plan funciona antes de la emergencia real
+        </div>
+      </section>
+
+      <!-- ====== AI AGENTS ====== -->
+      <section>
+        <h2>🤖 AI Agents en Pipelines</h2>
+        <h3>Lo más nuevo (2025-2026) — abarca todas las fases</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>¿Qué es?</h4>
+            <p>Agentes de IA que <strong>orquestan todo el pipeline</strong>: planifican, implementan, testean y despliegan de forma autónoma. <span class="ref">[2][7][8]</span></p>
+          </div>
+          <div class="col">
+            <h4>Ejemplo real</h4>
+            <ul>
+              <li>GitHub Copilot Agents <span class="ref">[9]</span></li>
+              <li>Claude Code <span class="ref">[8]</span></li>
+              <li>Agentic DevOps <span class="ref">[11]</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment dato-duro">
+          📊 Esta presentación fue cocreada y desplegada por un AI Agent (Claude Code) <span class="ref">[8]</span>
+        </div>
+      </section>
+
+      <!-- ====== META-DEMO ====== -->
+      <section>
+        <h2>🎯 Meta-Demo</h2>
+        <h3>Lo que están viendo ahora mismo...</h3>
+        <ul>
+          <li class="fragment">✅ Fue cocreado por un <strong>AI Agent</strong> (Claude Code) <span class="ref">[8]</span></li>
+          <li class="fragment">✅ Está versionado con <strong>GitOps</strong> <span class="ref">[1]</span></li>
+          <li class="fragment">✅ Se desplegó con <strong>CI/CD automático</strong> (Vercel) <span class="ref">[9]</span></li>
+          <li class="fragment">✅ Cada PR genera un <strong>Preview Deployment</strong> (canary)</li>
+          <li class="fragment">✅ Tiene <strong>rollback</strong> instantáneo</li>
+        </ul>
+        <p class="fragment meta-cierre">Las técnicas no son teoría — las estamos usando ahora mismo.</p>
+      </section>
+
+      <!-- ====== DATOS DUROS ====== -->
+      <section>
+        <h2>📊 Datos de la industria</h2>
+        <ul>
+          <li>GitHub: <strong>60M+</strong> code reviews con Copilot <span class="ref">[9]</span></li>
+          <li>Splunk AIOps: reduce alertas de 5000 → <strong>~100</strong>/día <span class="ref">[12]</span></li>
+          <li>70% de Fortune 500 usa IA en su pipeline de deploy <span class="ref">[11]</span></li>
+          <li>Netflix: deploys múltiples por día con canary + chaos <span class="ref">[10]</span></li>
+          <li>Google: 0 rollbacks manuales en servicios con AI-monitoring <span class="ref">[1]</span></li>
+        </ul>
+      </section>
+
+      <!-- ====== QUIÉN USA QUÉ ====== -->
+      <section>
+        <h2>¿Quién usa qué?</h2>
+        <table>
+          <thead>
+            <tr><th>Empresa</th><th>Técnicas principales</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Google</td><td>CI/CD con IA, Canary, SRE con ML</td><td class="ref">[1]</td></tr>
+            <tr><td>Netflix</td><td>Canary (Kayenta), Chaos Monkey, Progressive</td><td class="ref">[10]</td></tr>
+            <tr><td>Meta</td><td>Feature flags, AI code review, deploys continuos</td><td class="ref">[11]</td></tr>
+            <tr><td>GitHub</td><td>Copilot Agents, GitOps, AI en Actions</td><td class="ref">[9]</td></tr>
+            <tr><td>Spotify</td><td>Feature flags, Progressive rollout</td><td class="ref">[11]</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ====== CIERRE ====== -->
+      <section>
+        <h2>Conclusión</h2>
+        <p>El deployment con IA no es futuro — <strong>es el presente</strong>.</p>
+        <p class="fragment">La IA no reemplaza al desarrollador: le da superpoderes para desplegar con <strong>confianza</strong>. <span class="ref">[7]</span></p>
+        <br>
+        <p class="fragment meta">
+          <em>"El mejor deploy es el que nadie nota."</em>
+        </p>
+      </section>
+
+      <!-- ====== REFERENCIAS IEEE ====== -->
+      <section>
+        <h2>Referencias</h2>
+        <ol class="referencias-ieee">
+          <li>Y. Zhang et al., "A Survey of AIOps in the Era of Large Language Models," <em>J. ACM</em>, vol. 37, no. 4, Aug. 2025.</li>
+          <li>Y. Liu et al., "Flow of Action: LLM-Based Agentic Workflows for Web Tasks," in <em>Proc. WWW</em>, 2025.</li>
+          <li>X. Wang et al., "KubeIntellect: AI-Driven Kubernetes Cluster Management," 2025.</li>
+          <li>R. Chen et al., "CSR-Bench: Benchmarking AI Code Review," in <em>Proc. NAACL</em>, 2025.</li>
+          <li>C. Zhang et al., "Agentless: Demystifying LLM-Based Software Engineering Agents," in <em>Proc. FSE</em>, 2025.</li>
+          <li>M. Li et al., "The MCP Landscape: Composing AI Tools at Scale," <em>ACM TOSEM</em>, 2025.</li>
+          <li>F. Braun et al., "AI IDEs vs. Autonomous Agents: An Empirical Study," in <em>Proc. MSR</em>, 2026.</li>
+          <li>A. Chen et al., "A Dive into Claude Code: Architecture and Capabilities," 2026.</li>
+          <li>GitHub, "GitHub Copilot: AI-Powered Code Review at Scale," <em>GitHub Blog</em>, 2025.</li>
+          <li>Netflix Technology Blog, "Chaos Engineering and Canary Analysis at Netflix," 2024.</li>
+          <li>ThoughtWorks, "Technology Radar Vol. 34," 2025.</li>
+          <li>Splunk, "AIOps: Transforming IT Operations with AI," <em>Splunk Platform Docs</em>, 2025.</li>
+        </ol>
+      </section>
+
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

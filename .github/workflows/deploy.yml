@@ -1,0 +1,33 @@
+name: CI/CD con validación IA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Lint y validación
+        run: npm run build
+
+      - name: AI Code Review (ejemplo)
+        if: github.event_name == 'pull_request'
+        run: echo "Aquí iría la revisión de código con IA (Copilot, CodeRabbit, etc.)"
+
+      - name: Deploy a producción
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: echo "Deploy automático via Vercel (se conecta directo al repo)"
