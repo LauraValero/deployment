@@ -90,8 +90,15 @@
       <!-- VIDEO: CI/CD en acción -->
       <section>
         <h3>Demo: CI/CD en acción</h3>
-        <video class="demo-video" src="./videos/tecnica_cicd_deploy_automatico.webm" controls></video>
-        <p class="meta">Push → Vercel detecta → Build → Deploy en ~9 segundos</p>
+        <video class="demo-video" src="./videos/demo_cicd.webm" autoplay muted loop></video>
+        <p class="meta">Push → GitHub Actions valida → Vercel despliega en ~7s <span class="ref">[1][9]</span></p>
+      </section>
+
+      <!-- VIDEO: GitOps en acción -->
+      <section>
+        <h3>Demo: GitOps — Repo = Producción</h3>
+        <video class="demo-video" src="./videos/demo_gitops.webm" autoplay muted loop></video>
+        <p class="meta">Cada commit en main se refleja automáticamente en el sitio live <span class="ref">[1][3]</span></p>
       </section>
 
       <!-- T2: GitOps -->
@@ -114,6 +121,13 @@
         <div class="fragment analogia">
           💡 Como tener un contrato escrito: si no está en el repo, no existe
         </div>
+      </section>
+
+      <!-- VIDEO: IaC en acción -->
+      <section>
+        <h3>Demo: Infrastructure as Code</h3>
+        <video class="demo-video" src="./videos/demo_iac.webm" autoplay muted loop></video>
+        <p class="meta">vercel.json + deploy.yml definen toda la infra — sin clicks manuales <span class="ref">[3][6]</span></p>
       </section>
 
       <!-- T3: Infra as Code con IA -->
@@ -221,8 +235,8 @@
       <!-- VIDEO: Preview/Canary en acción -->
       <section>
         <h3>Demo: Preview Deployment (Canary)</h3>
-        <video class="demo-video" src="./videos/tecnica_preview_canary.webm" controls></video>
-        <p class="meta">PR → Vercel genera URL de preview → versión nueva sin afectar producción</p>
+        <video class="demo-video" src="./videos/demo_preview.webm" autoplay muted loop></video>
+        <p class="meta">PR → Vercel genera URL de preview → versión nueva sin tocar producción <span class="ref">[1][10]</span></p>
       </section>
 
       <!-- ====== POST-DEPLOY: TÍTULO ====== -->
@@ -300,9 +314,9 @@
 
       <!-- VIDEO: Rollback en acción -->
       <section>
-        <h3>Demo: Rollback</h3>
-        <video class="demo-video" src="./videos/tecnica_rollback.webm" controls></video>
-        <p class="meta">Múltiples versiones disponibles → revertir en segundos</p>
+        <h3>Demo: Rollback instantáneo</h3>
+        <video class="demo-video" src="./videos/demo_rollback.webm" autoplay muted loop></video>
+        <p class="meta">8 versiones disponibles en Vercel → revertir en &lt;1 segundo <span class="ref">[1][5]</span></p>
       </section>
 
       <!-- T10: Chaos engineering -->
@@ -362,6 +376,13 @@
           <li class="fragment">✅ Tiene <strong>rollback</strong> instantáneo</li>
         </ul>
         <p class="fragment meta-cierre">Las técnicas no son teoría — las estamos usando ahora mismo.</p>
+      </section>
+
+      <!-- VIDEO: Meta-Demo flujo completo -->
+      <section>
+        <h3>Demo: Flujo completo en acción</h3>
+        <video class="demo-video" src="./videos/demo_meta.webm" autoplay muted loop></video>
+        <p class="meta">Las 5 técnicas aplicadas en esta misma presentación <span class="ref">[1][8][9]</span></p>
       </section>
 
       <!-- ====== DATOS DUROS ====== -->
