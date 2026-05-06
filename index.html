@@ -89,7 +89,7 @@
 
       <!-- VIDEO: CI/CD en acción -->
       <section>
-        <h3>CI/CD en acción</h3>
+        <h3>CI/CD</h3>
         <video class="demo-video" src="./videos/demo_cicd.webm" autoplay muted loop></video>
         <p class="meta">Push → GitHub Actions valida → Vercel despliega en ~7s <span class="ref">[1][9]</span></p>
       </section>
@@ -341,6 +341,36 @@
         </div>
       </section>
 
+      <!-- ====== NIVELES DE SUPERVISIÓN ====== -->
+      <section>
+        <h3>Niveles de supervisión humana</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>HITL — Human-in-the-Loop</h4>
+            <p>La IA propone, el humano <strong>aprueba antes</strong> de actuar. <span class="ref">[7][8]</span></p>
+            <p class="meta" style="margin-top:0.3rem">Ej: code review antes de merge</p>
+          </div>
+          <div class="col">
+            <h4>HOTL — Human-on-the-Loop</h4>
+            <p>La IA actúa, el humano <strong>supervisa y puede intervenir</strong>. <span class="ref">[7]</span></p>
+            <p class="meta" style="margin-top:0.3rem">Ej: deploy automático con alertas</p>
+          </div>
+        </div>
+        <div class="fragment">
+          <div class="dos-columnas" style="margin-top:1rem">
+            <div class="col">
+              <h4>HOOTL — Human-out-of-the-Loop</h4>
+              <p>La IA actúa <strong>sin supervisión</strong>, regida por políticas. <span class="ref">[8]</span></p>
+              <p class="meta" style="margin-top:0.3rem">Ej: auto-restart de pods en K8s</p>
+            </div>
+            <div class="col">
+              <h4>¿Cuál usar?</h4>
+              <p>No es categoría fija — es una <strong>trayectoria</strong>. Se empieza con HITL y se escala según confianza. <span class="ref">[7][8]</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ====== AI AGENTS ====== -->
       <section>
         <h2>🤖 AI Agents en Pipelines</h2>
@@ -380,7 +410,7 @@
 
       <!-- VIDEO: Meta-Demo flujo completo -->
       <section>
-        <h3>Flujo completo en acción</h3>
+        <h3>Meta-Demo: técnicas aplicadas</h3>
         <video class="demo-video" src="./videos/demo_meta_v2.webm" autoplay muted loop></video>
         <p class="meta">Las 5 técnicas aplicadas en esta misma presentación <span class="ref">[1][8][9]</span></p>
       </section>
