@@ -414,6 +414,62 @@
         </table>
       </section>
 
+      <!-- ====== BUENAS PRÁCTICAS ====== -->
+      <section>
+        <h3>✅ Buenas prácticas con IA en deployment</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>Humano + IA = equipo</h4>
+            <ul>
+              <li>La IA propone, el humano aprueba <span class="ref">[7][9]</span></li>
+              <li>Siempre tener rollback antes de desplegar</li>
+              <li>Preview en cada PR — nunca directo a producción</li>
+              <li>Entender lo que la IA generó antes de hacer merge</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>Automatizar con criterio</h4>
+            <ul>
+              <li>Tests obligatorios antes de deploy <span class="ref">[4]</span></li>
+              <li>Feature flags para cambios riesgosos <span class="ref">[11]</span></li>
+              <li>Monitoreo post-deploy siempre activo <span class="ref">[12]</span></li>
+              <li>Documentar la infra en código, no en wikis</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment dato-duro">
+          📊 Equipos con code review + CI/CD tienen 4x menos incidentes en producción <span class="ref">[9]</span>
+        </div>
+      </section>
+
+      <!-- ====== MALAS PRÁCTICAS ====== -->
+      <section>
+        <h3>⚠️ Errores comunes (lo que NO hacer)</h3>
+        <div class="dos-columnas">
+          <div class="col">
+            <h4>Confiar ciegamente en la IA</h4>
+            <ul>
+              <li>Deploy automático sin tests → bugs en prod</li>
+              <li>Copiar código generado sin entenderlo</li>
+              <li>"La IA lo hizo, no es mi responsabilidad"</li>
+              <li>No tener plan de rollback</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>Saltarse el proceso</h4>
+            <ul>
+              <li>Push directo a main sin PR ni review</li>
+              <li>Configurar servidores a mano (sin IaC)</li>
+              <li>Ignorar alertas post-deploy <span class="ref">[12]</span></li>
+              <li>Desplegar viernes a las 5pm 😅</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fragment analogia">
+          💡 La IA es un copiloto, no el piloto. Tú decides cuándo despegar y cuándo abortar.
+        </div>
+      </section>
+
       <!-- ====== CIERRE ====== -->
       <section>
         <h2>Conclusión</h2>
