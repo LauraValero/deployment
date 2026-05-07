@@ -223,16 +223,26 @@
   text-align: left;
   max-width: 900px;
   margin: 0 auto;
-  max-height: 620px;
+  max-height: 580px;
   overflow-y: auto;
   padding-right: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.reveal section:has(#quiz-container) {
+  top: 0 !important;
+}
+
+.reveal section:has(#quiz-container) h2 {
+  font-size: 1.2em;
+  margin-bottom: 0.3rem;
 }
 
 #quiz-question {
-  font-size: 0.75em;
-  margin-bottom: 0.6rem;
+  font-size: 0.72em;
+  margin-bottom: 0.5rem;
   color: #fff;
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
 #quiz-options {
@@ -315,6 +325,7 @@
   font-size: 0.65em;
   cursor: pointer;
   margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
   font-weight: bold;
 }
 
