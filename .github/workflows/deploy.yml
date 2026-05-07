@@ -1,4 +1,4 @@
-name: CI/CD con validación IA
+name: CI/CD con validacion IA
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  validate-and-deploy:
+  test-and-validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,13 +21,37 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Lint y validación
+      - name: Tests unitarios (quiz logic + estructura)
+        run: npm test
+
+      - name: Build de produccion
         run: npm run build
 
-      - name: AI Code Review (ejemplo)
-        if: github.event_name == 'pull_request'
-        run: echo "Aquí iría la revisión de código con IA (Copilot, CodeRabbit, etc.)"
+      - name: Verificar que el build genero archivos
+        run: |
+          test -f dist/index.html || (echo "ERROR: dist/index.html no existe" && exit 1)
+          echo "Build verificado: dist/index.html existe"
 
-      - name: Deploy a producción
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: echo "Deploy automático via Vercel (se conecta directo al repo)"
+  deploy:
+    needs: test-and-validate
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy a produccion
+        run: echo "Deploy automatico via Vercel (conectado al repo por GitOps)"
+
+  post-deploy-check:
+    needs: deploy
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar que el sitio responde
+        run: |
+          sleep 15
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://exposicionfinal.vercel.app)
+          if [ "$STATUS" -eq 200 ]; then
+            echo "Sitio en produccion responde OK (HTTP $STATUS)"
+          else
+            echo "ALERTA: sitio responde HTTP $STATUS"
+            exit 1
+          fi
