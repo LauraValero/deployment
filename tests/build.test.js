@@ -46,7 +46,7 @@ describe('index.html', () => {
   it('referencia los videos de demo', () => {
     expect(html).toContain('demo_cicd.webm')
     expect(html).toContain('demo_gitops.webm')
-    expect(html).toContain('demo_rollback.webm')
+    expect(html).toContain('demo_observability.webm')
   })
 
   it('tiene la seccion de referencias', () => {
@@ -65,7 +65,7 @@ describe('videos de demo', () => {
     'demo_gitops.webm',
     'demo_iac.webm',
     'demo_preview.webm',
-    'demo_rollback.webm',
+    'demo_observability.webm',
     'demo_meta_v2.webm'
   ]
 
